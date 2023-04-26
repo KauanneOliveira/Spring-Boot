@@ -1,4 +1,4 @@
-package springboot2.util;
+package br.com.codelab.springboot2.util;
 
 import org.springframework.stereotype.Component;
 

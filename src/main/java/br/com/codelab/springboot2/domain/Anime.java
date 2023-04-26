@@ -1,4 +1,4 @@
-package springboot2.domain;
+package br.com.codelab.springboot2.domain;
 
 public class Anime {
 
