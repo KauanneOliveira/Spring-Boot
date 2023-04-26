@@ -25,13 +25,7 @@ public class AnimeController {
     //este método vai retornar uma lista de anime
     public List<Anime> list(){
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
-        return List.of( new Anime("DBZ"), new Anime("Berserk"));
-    }
-
-    @GetMapping(path = "list2")
-    public List<Anime> list2(){
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
-        return List.of( new Anime("DBZ"), new Anime("Berserk"), new Anime("One Piece"));
+        return List.of( new Anime("Kuruko no basket"), new Anime("Blood of Zeus"));
     }
 
 }
