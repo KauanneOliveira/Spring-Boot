@@ -1,1 +1,6 @@
 # onde ir� colocar as configura��es da aplica��o
+
+
+server:
+  error:
+    include-stacktrace: never

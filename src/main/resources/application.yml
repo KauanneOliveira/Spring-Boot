@@ -1,0 +1,7 @@
+# onde irá colocar as configurações da aplicação
+
+#usando o  include-stacktrace: nver  não vai mostrar um monte de informações (stacktrace) no front-end quando dá erro
+# usando o include-stacktrace: on_param só vai mostrar se adicionar (sem /) o "?trace=true"
+server:
+  error:
+    include-stacktrace: on_param
