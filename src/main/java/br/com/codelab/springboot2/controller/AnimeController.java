@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import br.com.codelab.springboot2.domain.Anime;
 import br.com.codelab.springboot2.util.DateUtil;
 
@@ -29,14 +26,19 @@ public class AnimeController {
     private final AnimeService animeService;
 
     @GetMapping
-    //este método vai retornar uma lista de anime
     public ResponseEntity<List<Anime>> list(){
+        //este método vai retornar uma lista de anime
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
         return ResponseEntity.ok( animeService.listAll() ); //o ResponseEntity vai retornar informações extras, como o status dessa requisição
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Anime> findById(@PathVariable long id){
+    public ResponseEntity<Anime> findById( @PathVariable long id){
         return ResponseEntity.ok( animeService.findById(id) );
+    }
+
+    @PostMapping
+    public ResponseEntity<Anime> save(@RequestBody Anime anime){
+        return new ResponseEntity<>( animeService.save(anime), HttpStatus.CREATED );
     }
 }

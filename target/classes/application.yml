@@ -1,6 +1,7 @@
 # onde ir� colocar as configura��es da aplica��o
 
-
+#usando o  include-stacktrace: nver  n�o vai mostrar um monte de informa��es (stacktrace) no front-end quando d� erro
+# usando o include-stacktrace: on_param s� vai mostrar se adicionar (sem /) o "?trace=true"
 server:
   error:
-    include-stacktrace: never
+    include-stacktrace: on_param
