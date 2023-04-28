@@ -1,7 +1,21 @@
-# onde ir� colocar as configura��es da aplica��o
+#onde ira colocar as configuracoes da aplicacao
 
-#usando o  include-stacktrace: nver  n�o vai mostrar um monte de informa��es (stacktrace) no front-end quando d� erro
-# usando o include-stacktrace: on_param s� vai mostrar se adicionar (sem /) o "?trace=true"
+#usando o  include-stacktrace: never  nao vai mostrar um monte de informacoes (stacktrace) no front-end quando da erro
+#usando o include-stacktrace: on_param so vai mostrar se adicionar (sem /) o "?trace=true"
+#O SSL está false pq ira trabalhar localmente
+#createDatabaseIfNotExists=true significa que se não existir essa data base, ela sera criada
+# ddl-auto: update - significa qye todos as vezes que iniciar o bdd na aplicação, ele irá atualizar o banco atraves do update
+
 server:
   error:
     include-stacktrace: on_param
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Anime?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+

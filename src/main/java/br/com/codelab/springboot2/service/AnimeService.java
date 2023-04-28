@@ -40,4 +40,13 @@ public class AnimeService {
         animes.add(anime);
         return anime;
     }
+
+    public void delete(long id) {
+        animes.remove( findById(id) ); //antes de remover, vai procurar se tem o id e dps vai remover
+    }
+
+    public void replace(Anime anime) {
+        delete( anime.getId() );  //vai pesquisar, caso exista ele vai remover da lista
+        animes.add(anime) ;       // e aqui ele vai adicionar o novo valor
+    }
 }
