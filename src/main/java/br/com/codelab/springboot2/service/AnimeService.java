@@ -3,6 +3,7 @@
 package br.com.codelab.springboot2.service;
 
 import br.com.codelab.springboot2.domain.Anime;
+import br.com.codelab.springboot2.mapper.AnimeMapper;
 import br.com.codelab.springboot2.repository.AnimeRepository;
 import br.com.codelab.springboot2.requests.AnimePostRequestBody;
 import br.com.codelab.springboot2.requests.AnimePutRequestBody;
@@ -32,7 +33,7 @@ public class AnimeService {
     }
 
     public Anime save(AnimePostRequestBody animePostRequestBody) {
-        return animeRepository.save( Anime.builder().name( animePostRequestBody.getName() ).build() );
+        return animeRepository.save( AnimeMapper.INSTANCE.toAnime(animePostRequestBody) );
     }
 
     public void delete(long id) {
@@ -41,11 +42,8 @@ public class AnimeService {
 
     public void replace(AnimePutRequestBody animePutRequestBody) {
         Anime savedAnime = findByIdOrThrowBadRequestException( animePutRequestBody.getId() ); //se não encontrar o id ou vai mostrar uma exceção
-        Anime anime = Anime.builder()
-                .id( savedAnime.getId() )
-                .name( animePutRequestBody.getName() )
-                .build();  //o id vai ser o que está no bdd e td o resto vai ser atualizado
-
+        Anime anime = AnimeMapper.INSTANCE.toAnime(animePutRequestBody);
+        anime.setId( savedAnime.getId() );
         animeRepository.save(anime);
     }
 }
