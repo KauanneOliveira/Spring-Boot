@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor //vai gerar construtores com todos os valores (os métodos e construtores vão ser gerados na target/classes)
 @NoArgsConstructor //vai criar um contrutor sem argumentos, é necessario quando quer tranformar uma classe em Entity colocando o @Entity
 @Entity
+@Builder
 public class Anime {
 
     @Id

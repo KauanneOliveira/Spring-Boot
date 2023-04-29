@@ -3,50 +3,49 @@
 package br.com.codelab.springboot2.service;
 
 import br.com.codelab.springboot2.domain.Anime;
+import br.com.codelab.springboot2.repository.AnimeRepository;
+import br.com.codelab.springboot2.requests.AnimePostRequestBody;
+import br.com.codelab.springboot2.requests.AnimePutRequestBody;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Service
+@RequiredArgsConstructor
 public class AnimeService {
 
-    private static List<Anime> animes;
-    static {
-        animes = new ArrayList<>( List.of( new Anime(1L, "Kuruko no basket"), new Anime(2L, "Blood of Zeus") ) );
-    }
-
-    //private final AnimeRepository animeRepository;
+    private final AnimeRepository animeRepository;
 
     public List<Anime> listAll(){
-        return animes;
+        return animeRepository.findAll();
     }
 
     //orElseThrow é no caso de não encontrar nada
     // é no caso de vc tentar executar uma requisição na url passando um id e não encontra esse id, mts retornam o 404 (que é o status não encontrado)
     //mas o 404 não mostra oq não foi encontrado, por isso é melhor fazer assim
-    public Anime findById(long id){
-        return animes.stream()
-                .filter( anime -> anime.getId().equals(id) )
-                .findFirst()
-                .orElseThrow( () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime not Found") );
+    public Anime findByIdOrThrowBadRequestException(long id){
+        return animeRepository.findById(id)
+                .orElseThrow( () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime not Found (Anime não encontrado)") );
     }
 
-    public Anime save(Anime anime) {
-        anime.setId(ThreadLocalRandom.current().nextLong(3, 100000));
-        animes.add(anime);
-        return anime;
+    public Anime save(AnimePostRequestBody animePostRequestBody) {
+        return animeRepository.save( Anime.builder().name( animePostRequestBody.getName() ).build() );
     }
 
     public void delete(long id) {
-        animes.remove( findById(id) ); //antes de remover, vai procurar se tem o id e dps vai remover
+        animeRepository.delete( findByIdOrThrowBadRequestException(id) );
     }
 
-    public void replace(Anime anime) {
-        delete( anime.getId() );  //vai pesquisar, caso exista ele vai remover da lista
-        animes.add(anime) ;       // e aqui ele vai adicionar o novo valor
+    public void replace(AnimePutRequestBody animePutRequestBody) {
+        Anime savedAnime = findByIdOrThrowBadRequestException( animePutRequestBody.getId() ); //se não encontrar o id ou vai mostrar uma exceção
+        Anime anime = Anime.builder()
+                .id( savedAnime.getId() )
+                .name( animePutRequestBody.getName() )
+                .build();  //o id vai ser o que está no bdd e td o resto vai ser atualizado
+
+        animeRepository.save(anime);
     }
 }
