@@ -8,6 +8,8 @@ import br.com.codelab.springboot2.service.AnimeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,10 +31,9 @@ public class AnimeController {
     private final AnimeService animeService;
 
     @GetMapping
-    public ResponseEntity<List<Anime>> list(){
-        //este método vai retornar uma lista de anime
+    public ResponseEntity<Page<Anime>> list(Pageable pageable){
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
-        return ResponseEntity.ok( animeService.listAll() ); //o ResponseEntity vai retornar informações extras, como o status dessa requisição
+        return ResponseEntity.ok( animeService.listAll(pageable) ); //o ResponseEntity vai retornar informações extras, como o status dessa requisição
     }
 
     @GetMapping(path = "/{id}")
