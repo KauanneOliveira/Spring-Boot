@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Builder
 public class Anime {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //o atributo abaixo será a chave primária
     private Long id;
