@@ -18,5 +18,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true # vai mostrar no console(Terminal) o que está sendo execultado
+    # show-sql: true # vai mostrar no console(Terminal) o que está sendo execultado do bdd
 
+#vai mostrar no Terminal o que está sendo execultado do bdd só que no padrão logging (mostrando a data, sobre o que se trata, o pacote etc.)
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
