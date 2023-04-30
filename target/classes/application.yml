@@ -12,10 +12,11 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/Anime?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
+    url: jdbc:postgresql://localhost:5432/Anime?createDatabaseIfNotExist=true
     username: postgres
     password: postgres
   jpa:
     hibernate:
       ddl-auto: update
+    show-sql: true # vai mostrar no console(Terminal) o que está sendo execultado
 

@@ -3,6 +3,7 @@
 package br.com.codelab.springboot2.service;
 
 import br.com.codelab.springboot2.domain.Anime;
+import br.com.codelab.springboot2.exception.BadRequestException;
 import br.com.codelab.springboot2.mapper.AnimeMapper;
 import br.com.codelab.springboot2.repository.AnimeRepository;
 import br.com.codelab.springboot2.requests.AnimePostRequestBody;
@@ -24,12 +25,16 @@ public class AnimeService {
         return animeRepository.findAll();
     }
 
+    public List<Anime> findByName(String name){
+        return animeRepository.findByName(name);
+    }
+
     //orElseThrow é no caso de não encontrar nada
     // é no caso de vc tentar executar uma requisição na url passando um id e não encontra esse id, mts retornam o 404 (que é o status não encontrado)
     //mas o 404 não mostra oq não foi encontrado, por isso é melhor fazer assim
     public Anime findByIdOrThrowBadRequestException(long id){
         return animeRepository.findById(id)
-                .orElseThrow( () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime not Found (Anime não encontrado)") );
+                .orElseThrow( () -> new BadRequestException("Anime not Found (Anime não encontrado)") );
     }
 
     public Anime save(AnimePostRequestBody animePostRequestBody) {
@@ -47,3 +52,4 @@ public class AnimeService {
         animeRepository.save(anime);
     }
 }
+
