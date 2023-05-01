@@ -36,6 +36,12 @@ public class AnimeController {
         return ResponseEntity.ok( animeService.listAll(pageable) ); //o ResponseEntity vai retornar informações extras, como o status dessa requisição
     }
 
+    @GetMapping(path= "/all")
+    public ResponseEntity<List<Anime>> listAll(){
+        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
+        return ResponseEntity.ok( animeService.listAllNonPageable() ); //o ResponseEntity vai retornar informações extras, como o status dessa requisição
+    }
+
     @GetMapping(path = "/{id}")
     public ResponseEntity<Anime> findById( @PathVariable long id){
         return ResponseEntity.ok( animeService.findByIdOrThrowBadRequestException(id) );

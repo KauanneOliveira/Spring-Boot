@@ -28,13 +28,17 @@ public class AnimeService {
         return animeRepository.findAll(pageable);
     }
 
+    public List<Anime> listAllNonPageable() {
+        return animeRepository.findAll();
+    }
+
     public List<Anime> findByName(String name){
         return animeRepository.findByName(name);
     }
-
     //orElseThrow é no caso de não encontrar nada
     // é no caso de vc tentar executar uma requisição na url passando um id e não encontra esse id, mts retornam o 404 (que é o status não encontrado)
     //mas o 404 não mostra oq não foi encontrado, por isso é melhor fazer assim
+
     public Anime findByIdOrThrowBadRequestException(long id){
         return animeRepository.findById(id)
                 .orElseThrow( () -> new BadRequestException("Anime not Found (Anime não encontrado)") );
