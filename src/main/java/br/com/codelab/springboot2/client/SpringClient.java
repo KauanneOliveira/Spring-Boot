@@ -14,7 +14,7 @@ public class SpringClient {
     public static void main(String[] args) {
         
         //diferença entre método ForEntity e ForObject (tanto o get quanto o post): o ForEntity vai retornar o objeto dentro de um mapper e o ForObject vai retornar o objeto diretamente
-        //RestTemplate exchange é usado para quando vc estiver usando uma Array ou não estiver passando  uma autenticação
+        //RestTemplate exchange é usado para quando vc estiver usando uma Array ou não estiver passando um argumento
 
 
                                                             //exibindo animes
@@ -38,10 +38,10 @@ public class SpringClient {
                 null,
                 new ParameterizedTypeReference<>() {});
         log.info( exchange.getBody() );
-        
+
                                                         //adicionando animes
 
-        Anime kingdom = Anime.builder().name("kingdom").build();
+         Anime kingdom = Anime.builder().name("kingdom").build();
         //sintaxe postForObject: url, objeto, classe
         Anime kingdomSaved = new RestTemplate().postForObject("http://localhost:8080/animes", kingdom, Anime.class);
         log.info( "saved anime {}", kingdomSaved);
@@ -51,8 +51,25 @@ public class SpringClient {
                 HttpMethod.POST,
                 new HttpEntity<>( samuraiChamploo, createJsonHeader() ),
                 Anime.class);
-
         log.info("saved anime{}", samuraiChamplooSaved);
+
+                                                         // editando e excluindo animes
+
+        Anime animeToBeUpdated = samuraiChamplooSaved.getBody();
+        animeToBeUpdated.setName("Samurai Champloo 2");
+
+        ResponseEntity<Void> samuraiChamplooUpdated = new RestTemplate().exchange("http://localhost:8080/animes",
+                HttpMethod.PUT,
+                new HttpEntity<>( animeToBeUpdated, createJsonHeader() ),
+                Void.class);
+        log.info(samuraiChamplooUpdated);
+
+        ResponseEntity<Void> samuraiChamplooDeleted = new RestTemplate().exchange("http://localhost:8080/animes/{id}",
+                HttpMethod.DELETE,
+                null,
+                Void.class,
+                animeToBeUpdated.getId());
+        log.info(samuraiChamplooDeleted);
     }
 
     private static HttpHeaders createJsonHeader(){
