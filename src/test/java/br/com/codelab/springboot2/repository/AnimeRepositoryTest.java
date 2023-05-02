@@ -3,7 +3,6 @@ package br.com.codelab.springboot2.repository;
 import br.com.codelab.springboot2.domain.Anime;
 import br.com.codelab.springboot2.util.AnimeCreator;
 import jakarta.validation.ConstraintViolationException;
-import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,6 @@ import java.util.Optional;
 
 @DataJpaTest //permite criar um teste
 @DisplayName("Tests for Anime Repository")
-@Log4j2
 //por padrão o nome do teste é o nome da classe, mas vc pode mudar o nome pelo @DisplayName
 class AnimeRepositoryTest {
 
