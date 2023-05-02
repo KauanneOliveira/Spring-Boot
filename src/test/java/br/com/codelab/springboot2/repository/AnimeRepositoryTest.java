@@ -1,6 +1,7 @@
 package br.com.codelab.springboot2.repository;
 
 import br.com.codelab.springboot2.domain.Anime;
+import br.com.codelab.springboot2.util.AnimeCreator;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
@@ -25,7 +26,7 @@ class AnimeRepositoryTest {
     @DisplayName("Save persists anime when Sucessful")
     //forma recomendada de nomear um teste: nomeMetodo_precisaFazer_quandoAcontecer (Nome do método que quer testar, O que esse método precisa fazer, Quando isso deve acontecer)
     void save_PersistAnime_WhenSuccessful(){
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
         Anime animeSaved = this.animeRepository.save(animeToBeSaved); //está mandando o valor para o bdd
         Assertions.assertThat(animeSaved).isNotNull(); //está vereicando se ele foi retornado
         Assertions.assertThat(animeSaved.getId()).isNotNull(); // se ele tem o id
@@ -34,7 +35,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Save updates anime when Sucessful")
     void save_UpdatesAnime_WhenSuccessful(){
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
         animeSaved.setName("Overlord");
@@ -48,7 +49,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Delete removes  anime when Sucessful")
     void delete_RemovesAnime_WhenSuccessful(){
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
         this.animeRepository.delete(animeSaved);
@@ -61,7 +62,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Find By Name returns list of anime when Sucessful")
     void findByName_ReturnsListOfAnime_WhenSuccessful(){
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
         String name = animeSaved.getName();
@@ -92,13 +93,5 @@ class AnimeRepositoryTest {
         Assertions.assertThatExceptionOfType(ConstraintViolationException.class)
                 .isThrownBy( () -> this.animeRepository.save(anime) )
                 .withMessageContaining("The anime name cannot be empty");
-    }
-
-    //é necessário criar esse método para ter um anime para ser usado no teste
-    //esse método vai sempre retornar um anime
-    private Anime createAnime(){
-        return Anime.builder()
-                .name("Hajime no Ippo")
-                .build();
     }
 }
