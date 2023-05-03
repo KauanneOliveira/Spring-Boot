@@ -3,7 +3,7 @@
 ## Atividade da Semana 3 do projeto CodeLab do IFSP
 
 Repositório criado para armazenar os códigos do estudo sobre o Spring Boot do curso `Spring Boot Essentials 2`. 
-KauanneOlivera
+
 ##  Autor
 
 👤 **Kauanne Oliveira**
